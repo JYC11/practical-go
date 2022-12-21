@@ -20,7 +20,7 @@ func getName(r io.Reader, w io.Writer) (string, error) {
 	}
 	name := scanner.Text()
 	if len(name) == 0 {
-		return "", errors.New("you didn't enter your name")
+		return "", errors.New("You didn't enter your name")
 	}
 	return name, nil
 }
@@ -51,7 +51,7 @@ Usage of %s: <options> [name]`
 	if err != nil {
 		return c, err
 	}
-	if fs.NArg() != 0 {
+	if fs.NArg() > 1 {
 		return c, errInvalidPosArgSpecified
 	}
 	if fs.NArg() == 1 {
@@ -91,8 +91,8 @@ func main() {
 	if err != nil {
 		if errors.Is(err, errInvalidPosArgSpecified) {
 			fmt.Fprintln(os.Stdout, err)
-			os.Exit(1)
 		}
+		os.Exit(1)
 	}
 	err = validateArgs(c)
 	if err != nil {
