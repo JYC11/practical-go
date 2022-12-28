@@ -38,8 +38,19 @@ http: <options> server`
 		return ErrNoServerSpecified
 	}
 
-	c := httpConfig{verb: v}
-	c.url = fs.Arg(0)
-	fmt.Fprintln(w, "Executing http command")
-	return nil
+	validVerbs := map[string]int{
+		"GET":  1,
+		"POST": 1,
+		"HEAD": 1,
+	}
+
+	if _, exists := validVerbs[v]; exists {
+		c := httpConfig{verb: v}
+		c.url = fs.Arg(0)
+		fmt.Fprintln(w, "Executing http command")
+		return nil
+	} else {
+		return ErrInvalidHttpVerb
+	}
+
 }
